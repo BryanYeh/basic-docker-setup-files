@@ -25,12 +25,14 @@ APP_CONTAINER_NAME=
 # if it is not updated, the app cannot connect to the db
 # DB_HOST=db
 DB_CONTAINER_NAME=
+DB_CONTAINER_PORT=
 
 NGINX_CONTAINER_NAME=
-NGINX_PORT=80
+NGINX_CONTAINER_PORT=
 
 # REDIS_HOST needs to be the same as this variable in Laravel's .env
 REDIS_CONTAINER_NAME=
+REDIS_CONTAINER_PORT=
 
 NPM_CONTAINER_NAME=
 ```
