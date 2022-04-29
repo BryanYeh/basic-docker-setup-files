@@ -1,0 +1,5 @@
+#!/bin/bash
+
+command="docker-compose exec -it app composer "$@""
+echo "Running composer on docker app: "
+$command

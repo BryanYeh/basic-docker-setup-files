@@ -1,0 +1,71 @@
+version: '3'
+services:
+  app:
+    build:
+      args:
+        user: ${APP_USER}
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    container_name: ${APP_CONTAINER_NAME}
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - ${NETWORKS}
+
+  db:
+    image: mariadb:10.7-focal
+    container_name: ${DB_CONTAINER_NAME}
+    volumes:
+      - ./docker-volumes/database:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
+    ports:
+      - ${DB_PORT}:3306
+    networks:
+      - ${NETWORKS}
+    restart: unless-stopped
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: ${REDIS_CONTAINER_NAME}
+    volumes:
+      - ./docker-volumes/redis:/data
+    ports:
+      - ${REDIS_PORT}:6379
+    networks:
+      - ${NETWORKS}
+
+  nginx:
+    image: nginx:1.21-alpine
+    container_name: ${NGINX_CONTAINER_NAME}
+    restart: unless-stopped
+    ports:
+      - ${NGINX_PORT}:80
+    volumes:
+      - ./:/var/www
+      - ./docker-volumes/nginx:/etc/nginx/conf.d/
+    networks:
+      - ${NETWORKS}
+
+  npm:
+    image: node:18-alpine
+    container_name: ${NPM_CONTAINER_NAME}
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - .:/var/www/
+    working_dir: /var/www/
+    entrypoint: ['npm']
+    networks:
+      - ${NETWORKS}
+
+networks:
+  NETWORKS:
+    driver: bridge
