@@ -43,5 +43,16 @@ echo "NPM_CONTAINER_NAME=$NPM_CONTAINER_NAME" >> .env
 # update REPLACE_NETWORKS in docker-compose.yml
 sed -i '' "s/REPLACE_NETWORKS/$NETWORKS/" docker-compose.yml
 
+# add to end of .gitignore
+echo "" >> .gitignore
+echo "**/.DS_Store" >> .gitignore
+echo "/docker-volumes/database/*" >> .gitignore
+echo "/docker-volumes/nginx/*" >> .gitignore
+echo "/docker-volumes/redis/*" >> .gitignore
+echo "!/docker-volumes/database/.gitkeep" >> .gitignore
+echo "!/docker-volumes/nginx/app.conf" >> .gitignore
+echo "!/docker-volumes/redis/.gitkeep" >> .gitignore
+echo "" >> .gitignore
+
 # delete itself
 rm ./init
