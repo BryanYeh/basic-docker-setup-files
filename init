@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# All these variables are required
+NETWORKS=""
+
+APP_USER=user
+
+DB_HOST="db"
+DB_CONTAINER_NAME=""
+DB_CONTAINER_PORT=
+
+NGINX_CONTAINER_NAME=""
+NGINX_CONTAINER_PORT=
+
+REDIS_HOST="redis"
+REDIS_CONTAINER_NAME=""
+REDIS_CONTAINER_PORT=
+
+NPM_CONTAINER_NAME=""
+
+
+# make a copy of .env.example to .env
+[ ! -f ".env" ] && cp .env.example .env
+
+
+# update .env DB_HOST and REDIS_HOST to docker-compose.yml service names
+find .env -type f -exec sed -i '' -e "/^DB_HOST=/s/=.*/=\'$DB_HOST\'/" {} \;
+find .env -type f -exec sed -i '' -e "/^REDIS_HOST=/s/=.*/=\'$REDIS_HOST\'/" {} \;
+
+# add to end of .env
+echo "NETWORKS=$NETWORKS" >> .env
+echo "" >> .env
+echo "APP_USER=$APP_USER" >> .env
+echo "" >> .env
+echo "DB_CONTAINER_NAME=$DB_CONTAINER_NAME" >> .env
+echo "DB_CONTAINER_PORT=$DB_CONTAINER_PORT" >> .env
+echo "" >> .env
+echo "REDIS_CONTAINER_NAME=$REDIS_CONTAINER_NAME" >> .env
+echo "REDIS_CONTAINER_PORT=$REDIS_CONTAINER_PORT" >> .env
+echo "" >> .env
+echo "NPM_CONTAINER_NAME=$NPM_CONTAINER_NAME" >> .env
+
+# update REPLACE_NETWORKS in docker-compose.yml
+sed -i '' "s/REPLACE_NETWORKS/$NETWORKS/" docker-compose.yml
+
+# delete itself
+rm ./init
