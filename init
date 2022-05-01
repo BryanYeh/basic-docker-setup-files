@@ -54,5 +54,8 @@ echo "!/docker-volumes/nginx/app.conf" >> .gitignore
 echo "!/docker-volumes/redis/.gitkeep" >> .gitignore
 echo "" >> .gitignore
 
+# remove all .DS_Store
+find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
+
 # delete itself
 rm ./init
