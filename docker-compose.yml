@@ -66,5 +66,5 @@ services:
       - ${NETWORKS}
 
 networks:
-  :
+  REPLACE_NETWORKS:
     driver: bridge
