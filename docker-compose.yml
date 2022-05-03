@@ -7,7 +7,6 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    container_name: ${APP_CONTAINER_NAME}
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -67,5 +66,5 @@ services:
       - ${NETWORKS}
 
 networks:
-  REPLACE_NETWORKS:
+  :
     driver: bridge
