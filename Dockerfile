@@ -37,8 +37,11 @@ RUN docker-php-ext-install \
     mbstring \
     opcache \
     pdo_mysql \
-    zip \
-    gd
+    zip 
+
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
