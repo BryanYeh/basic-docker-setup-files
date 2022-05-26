@@ -17,8 +17,9 @@ Scripts used are mainly run on Mac
 3. Run `./init`, this will automatically make a copy of `.env.example` to `.env` if it doesn't exist and updates `docker-compose.yml` and `.env`
 4. Finish configuring `.env`
 5. Run `docker-compose up --build -d` to build the containers (`docker-compose up -d` only after container is built the first time)
-6. Run `./php artisan key:generate --ansi`
-7. Code!
+6. Run `./composer install`
+7. Run `./php artisan key:generate --ansi`
+8. Code!
 
 ## Commands
 Since you won't have PHP,Node,NPM,Composer installed locally, these commands will be shortcuts to use them in Docker container
