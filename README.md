@@ -5,7 +5,7 @@ This is a really basic setup to get Docker running with Laravel.
 Scripts used are mainly run on Mac
 
 ## What will be installed?
-- PHP 8.0
+- PHP 8.1
 - Redis 6.2
 - Node 18
 - Composer
